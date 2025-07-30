@@ -1,42 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Great+Vibes&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Romantic birthday design system for Lary */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Romantic color palette - Yellow, Wine & Pink */
+    --background: 45 100% 97%;
+    --foreground: 0 15% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 15% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 15% 20%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Wine/Burgundy as primary */
+    --primary: 345 85% 35%;
+    --primary-foreground: 45 100% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Soft yellow as secondary */
+    --secondary: 48 95% 88%;
+    --secondary-foreground: 345 85% 35%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 45 60% 95%;
+    --muted-foreground: 0 15% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Pink accent */
+    --accent: 330 80% 85%;
+    --accent-foreground: 345 85% 35%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 45 40% 90%;
+    --input: 45 40% 95%;
+    --ring: 345 85% 35%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
+
+    /* Custom romantic colors */
+    --romantic-yellow: 48 95% 75%;
+    --romantic-wine: 345 85% 35%;
+    --romantic-pink: 330 80% 85%;
+    --romantic-gold: 45 90% 60%;
+
+    /* Gradients */
+    --gradient-romantic: linear-gradient(135deg, hsl(var(--romantic-yellow)), hsl(var(--romantic-pink)));
+    --gradient-envelope: linear-gradient(145deg, hsl(var(--romantic-yellow)), hsl(var(--romantic-gold)));
+    --gradient-card: linear-gradient(180deg, hsl(var(--card)), hsl(var(--accent)));
+
+    /* Shadows */
+    --shadow-romantic: 0 20px 40px -10px hsl(var(--romantic-wine) / 0.2);
+    --shadow-envelope: 0 15px 35px -5px hsl(var(--romantic-gold) / 0.3);
+    --shadow-card: 0 10px 25px -5px hsl(var(--romantic-pink) / 0.4);
+
+    /* Animations */
+    --transition-romantic: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.3s ease-out;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +124,116 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
+    background: var(--gradient-romantic);
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  /* Romantic animations */
+  .hearts-float {
+    position: absolute;
+    pointer-events: none;
+    animation: float-hearts 8s ease-in-out infinite;
+  }
+
+  .envelope-open {
+    animation: envelope-opening 1.5s ease-out forwards;
+  }
+
+  .letter-appear {
+    animation: letter-slide-in 0.8s ease-out forwards;
+  }
+
+  .romantic-glow {
+    box-shadow: var(--shadow-romantic);
+    transition: var(--transition-romantic);
+  }
+
+  .romantic-glow:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 25px 50px -10px hsl(var(--romantic-wine) / 0.3);
+  }
+
+  /* Typography styles */
+  .font-romantic {
+    font-family: 'Dancing Script', cursive;
+  }
+
+  .font-elegant {
+    font-family: 'Great Vibes', cursive;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-romantic {
+    background: var(--gradient-romantic);
+  }
+
+  .bg-gradient-envelope {
+    background: var(--gradient-envelope);
+  }
+
+  .bg-gradient-card {
+    background: var(--gradient-card);
+  }
+
+  .text-romantic-wine {
+    color: hsl(var(--romantic-wine));
+  }
+
+  .text-romantic-gold {
+    color: hsl(var(--romantic-gold));
+  }
+
+  .border-romantic-pink {
+    border-color: hsl(var(--romantic-pink));
+  }
+}
+
+/* Keyframe animations */
+@keyframes float-hearts {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+    opacity: 0.7;
+  }
+  50% { 
+    transform: translateY(-20px) rotate(5deg); 
+    opacity: 1;
+  }
+}
+
+@keyframes envelope-opening {
+  0% {
+    transform: scale(1) rotateY(0deg);
+  }
+  50% {
+    transform: scale(1.1) rotateY(5deg);
+  }
+  100% {
+    transform: scale(1.05) rotateY(0deg);
+  }
+}
+
+@keyframes letter-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% { 
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1);
   }
 }

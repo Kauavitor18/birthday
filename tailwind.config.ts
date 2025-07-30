@@ -18,6 +18,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'romantic': ['Dancing Script', 'cursive'],
+				'elegant': ['Great Vibes', 'cursive'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -51,6 +55,12 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
+				},
+				romantic: {
+					yellow: 'hsl(var(--romantic-yellow))',
+					wine: 'hsl(var(--romantic-wine))',
+					pink: 'hsl(var(--romantic-pink))',
+					gold: 'hsl(var(--romantic-gold))',
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
