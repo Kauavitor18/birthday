@@ -294,15 +294,12 @@ const BirthdaySurprise = () => {
                 <p className="font-elegant text-2xl text-romantic-wine mb-4">
                   Uma memória especial nossa! 💝
                 </p>
-                <div className="w-64 h-48 mx-auto bg-gradient-to-br from-romantic-yellow/30 to-romantic-pink/30 rounded-lg border-2 border-romantic-gold/50 flex items-center justify-center">
-                  <div className="text-center">
-                    <Heart className="mx-auto text-romantic-wine text-4xl mb-2" />
-                    <p className="font-romantic text-romantic-wine">
-                      Aqui você pode colocar<br />
-                      uma foto especial<br />
-                      de vocês dois! 📸
-                    </p>
-                  </div>
+                <div className="w-80 h-60 mx-auto rounded-lg border-2 border-romantic-gold/50 overflow-hidden shadow-lg">
+                  <img 
+                    src="/lovable-uploads/6685363b-7d05-434f-af46-f92312b3db19.png" 
+                    alt="Foto especial de vocês dois" 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
             )}
