@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { Heart, Sparkles } from 'lucide-react';
+import { Heart, Sparkles, Gift, Star } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
 const BirthdaySurprise = () => {
   const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(false);
   const [currentLetter, setCurrentLetter] = useState(0);
   const [showLetters, setShowLetters] = useState(false);
+  const [showSecretButton, setShowSecretButton] = useState(false);
+  const [showSecretContent, setShowSecretContent] = useState(false);
+  const [cardFlipping, setCardFlipping] = useState(false);
 
   const letters = [
     {
@@ -26,18 +29,29 @@ const BirthdaySurprise = () => {
     setIsEnvelopeOpen(true);
     setTimeout(() => {
       setShowLetters(true);
-    }, 1000);
+    }, 1500);
+    setTimeout(() => {
+      setShowSecretButton(true);
+    }, 3000);
   };
 
   const nextLetter = () => {
     if (currentLetter < letters.length - 1) {
-      setCurrentLetter(currentLetter + 1);
+      setCardFlipping(true);
+      setTimeout(() => {
+        setCurrentLetter(currentLetter + 1);
+        setCardFlipping(false);
+      }, 300);
     }
   };
 
   const prevLetter = () => {
     if (currentLetter > 0) {
-      setCurrentLetter(currentLetter - 1);
+      setCardFlipping(true);
+      setTimeout(() => {
+        setCurrentLetter(currentLetter - 1);
+        setCardFlipping(false);
+      }, 300);
     }
   };
 
@@ -78,6 +92,42 @@ const BirthdaySurprise = () => {
     </div>
   );
 
+  // Celebration balloons for final message
+  const CelebrationBalloons = () => (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      {[...Array(5)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute balloon-float"
+          style={{
+            left: `${Math.random() * 100}%`,
+            animationDelay: `${i * 0.5}s`,
+          }}
+        >
+          <div className={`w-6 h-8 rounded-full ${i % 2 === 0 ? 'bg-romantic-pink' : 'bg-romantic-gold'}`} />
+        </div>
+      ))}
+    </div>
+  );
+
+  // Fireworks effect
+  const Fireworks = () => (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      {[...Array(12)].map((_, i) => (
+        <Star
+          key={i}
+          className="absolute firework-burst text-romantic-yellow opacity-70"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 50 + 10}%`,
+            animationDelay: `${i * 0.2}s`,
+            fontSize: `${Math.random() * 10 + 8}px`
+          }}
+        />
+      ))}
+    </div>
+  );
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative">
       <FloatingHearts />
@@ -96,15 +146,33 @@ const BirthdaySurprise = () => {
             
             <div 
               onClick={handleEnvelopeClick}
-              className="cursor-pointer transform transition-all duration-500 hover:scale-105 romantic-glow"
+              className="cursor-pointer transform transition-all duration-500 hover:scale-105 romantic-glow envelope-container"
             >
               <div className="relative">
                 {/* Envelope */}
-                <div className="w-80 h-56 md:w-96 md:h-64 bg-gradient-envelope rounded-lg shadow-2xl relative overflow-hidden border-2 border-romantic-gold">
+                <div className={`w-80 h-56 md:w-96 md:h-64 bg-gradient-envelope rounded-lg shadow-2xl relative overflow-hidden border-2 border-romantic-gold ${isEnvelopeOpen ? 'envelope-opening' : ''}`}>
                   <div className="absolute inset-0 bg-gradient-to-br from-romantic-yellow to-romantic-gold opacity-90"></div>
                   
-                  {/* Envelope flap */}
-                  <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-romantic-gold to-romantic-yellow transform origin-top"></div>
+                  {/* Envelope flap - animates opening */}
+                  <div className={`absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-romantic-gold to-romantic-yellow transform origin-top transition-all duration-1000 ${isEnvelopeOpen ? 'rotate-12 translate-y-2' : ''}`}></div>
+                  
+                  {/* Hearts floating up from envelope */}
+                  {isEnvelopeOpen && (
+                    <div className="absolute inset-0 pointer-events-none">
+                      {[...Array(4)].map((_, i) => (
+                        <Heart
+                          key={i}
+                          className="absolute text-romantic-pink hearts-up opacity-80"
+                          style={{
+                            left: `${40 + Math.random() * 20}%`,
+                            top: '50%',
+                            animationDelay: `${i * 0.3}s`,
+                            fontSize: '20px'
+                          }}
+                        />
+                      ))}
+                    </div>
+                  )}
                   
                   {/* Envelope content hint */}
                   <div className="absolute inset-4 bg-white/20 rounded border border-romantic-gold/30 flex items-center justify-center">
@@ -143,7 +211,7 @@ const BirthdaySurprise = () => {
               </p>
             </div>
 
-            <Card className="max-w-2xl mx-auto romantic-glow bg-gradient-card border-2 border-romantic-pink">
+            <Card className={`max-w-2xl mx-auto romantic-glow bg-gradient-card border-2 border-romantic-pink transition-all duration-300 ${cardFlipping ? 'card-flip' : ''}`}>
               <CardContent className="p-8 md:p-12">
                 <div className="text-center mb-6">
                   <Heart className="mx-auto text-romantic-wine text-4xl mb-4" />
@@ -193,10 +261,49 @@ const BirthdaySurprise = () => {
             </Card>
             
             {currentLetter === letters.length - 1 && (
-              <div className="text-center mt-8 animate-pulse">
-                <p className="font-elegant text-3xl text-romantic-wine">
-                  Com todo amor 💕
+              <>
+                <CelebrationBalloons />
+                <Fireworks />
+                <div className="text-center mt-8 animate-pulse">
+                  <p className="font-elegant text-3xl text-romantic-wine mb-6">
+                    Com todo amor 💕
+                  </p>
+                </div>
+              </>
+            )}
+
+            {/* Secret Button */}
+            {showSecretButton && !showSecretContent && (
+              <div className="text-center mt-6">
+                <button
+                  onClick={() => setShowSecretContent(true)}
+                  className="secret-button bg-gradient-to-r from-romantic-pink to-romantic-gold text-romantic-wine font-romantic text-lg px-8 py-3 rounded-full transform transition-all duration-500 hover:scale-110 shadow-lg opacity-0 animate-fade-in"
+                  style={{ animationDelay: '1s', animationFillMode: 'forwards' }}
+                >
+                  🎁 Clique aqui para ver algo especial
+                </button>
+              </div>
+            )}
+
+            {/* Secret Content */}
+            {showSecretContent && (
+              <div className="text-center mt-8 p-6 bg-white/20 rounded-lg border border-romantic-gold/30 animate-fade-in">
+                <div className="mb-4">
+                  <Gift className="mx-auto text-romantic-wine text-6xl mb-4 animate-bounce" />
+                </div>
+                <p className="font-elegant text-2xl text-romantic-wine mb-4">
+                  Uma memória especial nossa! 💝
                 </p>
+                <div className="w-64 h-48 mx-auto bg-gradient-to-br from-romantic-yellow/30 to-romantic-pink/30 rounded-lg border-2 border-romantic-gold/50 flex items-center justify-center">
+                  <div className="text-center">
+                    <Heart className="mx-auto text-romantic-wine text-4xl mb-2" />
+                    <p className="font-romantic text-romantic-wine">
+                      Aqui você pode colocar<br />
+                      uma foto especial<br />
+                      de vocês dois! 📸
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
           </div>
