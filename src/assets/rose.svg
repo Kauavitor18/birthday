@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <path d="M32 2C27 8 40 14 32 22C24 14 37 8 32 2Z" fill="#D72660"/>
+    <path d="M32 22C22 18 16 34 32 38C48 34 42 18 32 22Z" fill="#F46036"/>
+    <ellipse cx="32" cy="45" rx="15" ry="7" fill="#2E294E"/>
+    <path d="M32 38V62" stroke="#487A3A" stroke-width="3"/>
+    <path d="M32 50C38 52 42 58 42 62" stroke="#487A3A" stroke-width="2"/>
+    <path d="M32 50C26 52 22 58 22 62" stroke="#487A3A" stroke-width="2"/>
+  </g>
+</svg>
